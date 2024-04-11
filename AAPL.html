@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAPL Stock Data</title>
+</head>
+<body>
+
+<h2>AAPL Stock Data</h2>
+
+<table id="stock-data">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Data will be inserted here -->
+  </tbody>
+</table>
+
+<script>
+  // Function to fetch and parse CSV data
+  function fetchCSV(url) {
+    fetch(url)
+      .then(response => response.text())
+      .then(csvData => {
+        const rows = csvData.trim().split('\n').map(row => row.split(','));
+        const tbody = document.querySelector('#stock-data tbody');
+        tbody.innerHTML = rows.map(row => {
+          return `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+        }).join('');
+      });
+  }
+
+  // Call the function with the URL of the CSV file
+  fetchCSV('AAPLstock.csv');
+</script>
+
+</body>
+</html>
